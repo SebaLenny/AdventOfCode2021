@@ -8,7 +8,7 @@ namespace Day1
     {
         static List<int> PrepareInputNumbers(string path)
         {
-            return System.IO.File.ReadAllLines("input.txt")
+            return System.IO.File.ReadAllLines(path)
                 .Select(line => int.Parse(line))
                 .ToList();
         }

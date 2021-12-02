@@ -10,46 +10,25 @@ namespace Day2
         public int HorizontalPosition { get; set; }
         public int VerticalPosition { get; set; }
         public int Aim { get; set; }
+        public IBoatStrategy BoatStrategy { get; set; }
 
-        public void ApplyInstructionPartOne(Instruction instruction)
+        public void ResetPosition()
         {
-            if (instruction.Dir == Instruction.Direction.UP) VerticalPosition -= instruction.Units;
-            else if (instruction.Dir == Instruction.Direction.DOWN) VerticalPosition += instruction.Units;
-            else if (instruction.Dir == Instruction.Direction.FORWARD) HorizontalPosition += instruction.Units;
+            HorizontalPosition = 0;
+            VerticalPosition = 0;
+            Aim = 0;
         }
 
-        public void ApplyInstructionPartTwo(Instruction instruction)
+        public void ApplyInstruction(Instruction instruction)
         {
-            if (instruction.Dir == Instruction.Direction.UP)
-            {
-                // VerticalPosition -= instruction.Units;
-                Aim -= instruction.Units;
-            }
-            else if (instruction.Dir == Instruction.Direction.DOWN)
-            {
-                // VerticalPosition += instruction.Units;
-                Aim += instruction.Units;
-            }
-            else if (instruction.Dir == Instruction.Direction.FORWARD)
-            {
-                HorizontalPosition += instruction.Units;
-                VerticalPosition += Aim * instruction.Units;
-            }
+            BoatStrategy.ApplyInstruction(instruction, this);
         }
 
-        public void ApplyInstructionsPartOne(List<Instruction> instructions)
+        public void ApplyInstructions(List<Instruction> instructions)
         {
             foreach (var instruction in instructions)
             {
-                ApplyInstructionPartOne(instruction);
-            }
-        }
-
-        public void ApplyInstructionsPartTwo(List<Instruction> instructions)
-        {
-            foreach (var instruction in instructions)
-            {
-                ApplyInstructionPartTwo(instruction);
+                ApplyInstruction(instruction);
             }
         }
     }

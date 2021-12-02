@@ -18,14 +18,17 @@ namespace Day2
         {
             var inputLines = ReadInput(inputPath);
             var instructions = inputLines.Select(l => new Instruction(l)).ToList();
+
             var boat = new Boat();
-            boat.ApplyInstructionsPartOne(instructions);
+            boat.BoatStrategy = new PartOneBoatStrategy();
+            boat.ApplyInstructions(instructions);
             var answ = boat.VerticalPosition * boat.HorizontalPosition;
             Console.WriteLine($"Answer to part 1 is: {answ}");
 
-            var boatTwo = new Boat();
-            boatTwo.ApplyInstructionsPartTwo(instructions);
-            var answTwo = boatTwo.VerticalPosition * boatTwo.HorizontalPosition;
+            boat.BoatStrategy = new PartTwoBoatStrategy();
+            boat.ResetPosition();
+            boat.ApplyInstructions(instructions);
+            var answTwo = boat.VerticalPosition * boat.HorizontalPosition;
             Console.WriteLine($"Answer to part 1 is: {answTwo}");
         }
     }

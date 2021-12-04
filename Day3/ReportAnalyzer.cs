@@ -9,37 +9,27 @@ namespace Day3
     {
         public static Report Analyze(List<string> diagnosticReport)
         {
-            var ret = new Report();
             var popularity = CalculateBitPopularity(diagnosticReport);
             var gammaList = CalculateGammaList(popularity, diagnosticReport.Count);
             var epsilonList = CalculateEpsilonList(gammaList);
-            ret.GammaRate = BitListToInt(gammaList);
-            ret.EpsilonRate = BitListToInt(epsilonList);
-            ret.OxygenGeneratorRating = CalculateOxygenGeneratorRating(diagnosticReport);
-            ret.CO2ScrubberRating = CalculateCO2ScrubberRating(diagnosticReport);
-            return ret;
+            
+            return new Report
+            {
+                GammaRate = BitListToInt(gammaList),
+                EpsilonRate = BitListToInt(epsilonList),
+                OxygenGeneratorRating = CalculateRating(diagnosticReport, 1),
+                CO2ScrubberRating = CalculateRating(diagnosticReport, 0)
+            };
         }
 
-        private static int CalculateOxygenGeneratorRating(List<string> stringBitsList)
+        private static int CalculateRating(List<string> stringBitsList, int toFind)
         {
             var stringList = stringBitsList.ConvertAll(b => b); // Trick to get shallow copy
             for (int i = 0; i < stringBitsList[0].Length && stringList.Count > 1; i++)
             {
                 var ithBitSum = stringList.Sum(s => s[i] - '0');
-                var ithBitPopularity = ithBitSum * 2 >= stringList.Count ? 1 : 0;
+                var ithBitPopularity = ithBitSum * 2 >= stringList.Count ? toFind : (toFind + 1) % 2;
                 stringList = stringList.Where(s => s[i] - '0' == ithBitPopularity).ToList();
-            }
-            return Convert.ToInt32(stringList.First(), 2);
-        }
-
-        private static int CalculateCO2ScrubberRating(List<string> stringBitsList)
-        {
-            var stringList = stringBitsList.ConvertAll(b => b); // Trick to get shallow copy
-            for (int i = 0; i < stringBitsList[0].Length && stringList.Count > 1; i++)
-            {
-                var ithBitSum = stringList.Sum(s => s[i] - '0');
-                var ithBitUnpopularity = ithBitSum * 2 >= stringList.Count ? 0 : 1;
-                stringList = stringList.Where(s => s[i] - '0' == ithBitUnpopularity).ToList();
             }
             return Convert.ToInt32(stringList.First(), 2);
         }

@@ -77,5 +77,8 @@ namespace Day3
         public int EpsilonRate { get; set; }
         public int OxygenGeneratorRating { get; set; }
         public int CO2ScrubberRating { get; set; }
+
+        public int PowerConsumption { get { return GammaRate * EpsilonRate; } }
+        public int LifeSupportRating { get { return OxygenGeneratorRating * CO2ScrubberRating; } }
     }
 }

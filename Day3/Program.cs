@@ -20,9 +20,9 @@ namespace Day3
 
             var report = ReportAnalyzer.Analyze(inputLines);
 
-            System.Console.WriteLine($"Part 1 answer is: {report.EpsilonRate * report.GammaRate}");
+            System.Console.WriteLine($"Part 1 answer is: {report.PowerConsumption}");
 
-            System.Console.WriteLine($"Part 2 answer is: {report.OxygenGeneratorRating * report.CO2ScrubberRating}");
+            System.Console.WriteLine($"Part 2 answer is: {report.LifeSupportRating}");
         }
     }
 }

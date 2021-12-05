@@ -20,8 +20,11 @@ namespace Day4
             var bingoSubsystem = new BingoSubsystem();
             bingoSubsystem.ParseInput(input);
 
-            var partOneSolution = bingoSubsystem.PartOneSolution();
-            System.Console.WriteLine($"Part one answer is: {partOneSolution}");
+            // var partOneSolution = bingoSubsystem.PartOneSolution();
+            // System.Console.WriteLine($"Part one answer is: {partOneSolution}");
+
+            var partTwoSolution = bingoSubsystem.PartTwoSolution();
+            System.Console.WriteLine($"Part one answer is: {partTwoSolution}");
         }
     }
 }

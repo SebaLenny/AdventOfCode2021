@@ -10,6 +10,7 @@ namespace Day4
     {
         private List<int> Numbers { get; set; }
         private List<Board> Boards { get; set; }
+        private List<Board> WonBoards { get; set; } = new List<Board>();
         private int CurrentIteration { get; set; }
 
         public void ParseInput(string input)
@@ -64,6 +65,23 @@ namespace Day4
                 solution = SolutionOrDefault();
             }
             return solution;
+        }
+
+        public int PartTwoSolution()
+        {
+            var lastWinNumber = -1;
+            foreach (var number in Numbers)
+            {
+                Iterate();
+                var winningBoards = GetWinningBoards();
+                if (winningBoards.Count > 0)
+                {
+                    lastWinNumber = GetLastNumber();
+                    winningBoards.ForEach(b => Boards.Remove(b));
+                    winningBoards.ForEach(b => WonBoards.Add(b));
+                }
+            }
+            return WonBoards.Last().SumOfAllUnmarked() * lastWinNumber;
         }
     }
 }

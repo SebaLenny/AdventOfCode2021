@@ -62,9 +62,27 @@ namespace Day5
         private List<Vector2> GetDiagonalLinePoints()
         {
             var ret = new List<Vector2>();
-            for (int i = 0; i < 1 + End.X - Start.X; i++)
+            if (End > Start)
+                for (int i = 0; i < 1 + End.X - Start.X; i++)
+                {
+                    ret.Add(new Vector2 { X = Start.X + i, Y = Start.Y + i });
+                }
+            else
             {
-                ret.Add(new Vector2 { X = Start.X + i, Y = Start.Y + i });
+                if (Start.X < End.X)
+                {
+                    for (int i = 0; i < 1 + End.X - Start.X; i++)
+                    {
+                        ret.Add(new Vector2 { X = Start.X + i, Y = Start.Y - i });
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < 1 + Start.X - End.X; i++)
+                    {
+                        ret.Add(new Vector2 { X = Start.X - i, Y = Start.Y + i });
+                    }
+                }
             }
             return ret;
         }

@@ -6,7 +6,7 @@ namespace Day5
 {
     class Program
     {
-        const string inputPath = "test_input.txt";
+        const string inputPath = "input.txt";
 
         static List<string> ReadInput(string path)
         {

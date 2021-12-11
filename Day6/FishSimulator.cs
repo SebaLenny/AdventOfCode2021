@@ -7,32 +7,29 @@ namespace Day6
 {
     public class FishSimulator
     {
-        private List<byte> LastGeneration { get; set; } = new List<byte>();
+        private List<long> AgePopulation { get; set; } = new List<long> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         private int DaysElapsed { get; set; }
         private int MaxDays { get; set; }
-        public int LastDayCount { get { return LastGeneration.Count; } }
+        public long LastDayCount { get { return AgePopulation.Sum(); } }
 
         public FishSimulator(List<byte> initialPopulation, int maxDays)
         {
-            LastGeneration = new List<byte>(initialPopulation);
+            foreach (var number in initialPopulation)
+            {
+                AgePopulation[number] += 1;
+            }
             MaxDays = maxDays;
         }
 
         private void IteratePopulation()
         {
-            var newGen = new List<byte>(LastGeneration);
-            var oldCount = newGen.Count;
-            for (int i = 0; i < oldCount; i++)
+            long zeros = AgePopulation[0];
+            for (int i = 0; i < 8; i++)
             {
-                newGen[i] -= 1;
-                if (newGen[i] == byte.MaxValue)
-                {
-                    newGen[i] = 6;
-                    newGen.Add(8);
-                }
+                AgePopulation[i] = AgePopulation[i + 1];
             }
-            LastGeneration = newGen;
-            GC.Collect();
+            AgePopulation[6] += zeros;
+            AgePopulation[8] = zeros;
             DaysElapsed += 1;
         }
 
@@ -41,7 +38,6 @@ namespace Day6
             while (DaysElapsed < MaxDays)
             {
                 IteratePopulation();
-                System.Console.WriteLine($"{DaysElapsed}\tdays elapsed");
             }
         }
     }
